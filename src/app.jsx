@@ -19,16 +19,18 @@ const App = () => {
   return (
     <>
       <SearchStatus totalUsers={users.length} />
-      <table className='table'>
-        <thead>
-        <tr>
-          {headers.map(header => <th scope='col' key={header.id}>{header.title}</th>)}
-        </tr>
-        </thead>
-        <tbody>
-        <Users users={users} onDelete={handleDelete} onToggleBookmark={handleToggleBookmark} />
-        </tbody>
-      </table>
+      {users.length > 0 &&
+        <table className='table'>
+          <thead>
+          <tr>
+            {headers.map(header => <th scope='col' key={header.id}>{header.title}</th>)}
+          </tr>
+          </thead>
+          <tbody>
+          <Users users={users} onDelete={handleDelete} onToggleBookmark={handleToggleBookmark} />
+          </tbody>
+        </table>
+      }
     </>
   )
 }
