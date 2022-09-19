@@ -1,6 +1,6 @@
 import React from 'react'
 import User from './user'
-import headers from '../assets/headers'
+import Headers from './headers'
 
 const Users = ({ users, onDelete, onToggleBookmark }) => {
   return (
@@ -8,9 +8,7 @@ const Users = ({ users, onDelete, onToggleBookmark }) => {
       {users.length > 0 &&
         <table className='table'>
           <thead>
-          <tr>
-            {headers.map(header => <th scope='col' key={header.id}>{header.title}</th>)}
-          </tr>
+          <Headers />
           </thead>
           <tbody>
           {users.map(user => {
