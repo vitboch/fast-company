@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SearchStatus = ({ totalUsers }) => {
     const renderPhrase = (number) => {
@@ -27,6 +28,10 @@ const SearchStatus = ({ totalUsers }) => {
         return <span className={"fs-3 badge bg-" + color}>{answer}</span>;
     };
     return renderPhrase(totalUsers);
+};
+
+SearchStatus.propTypes = {
+    totalUsers: PropTypes.number.isRequired
 };
 
 export default SearchStatus;
