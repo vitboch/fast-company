@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Bookmark from "./bookmark";
 import Quality from "./quality";
-import PropTypes from "prop-types";
 
 const User = ({
     name,
@@ -48,12 +48,12 @@ const User = ({
 
 User.propTypes = {
     name: PropTypes.string.isRequired,
-    qualities: PropTypes.arrayOf(PropTypes.object).isRequired,
+    qualities: PropTypes.array,
     profession: PropTypes.object.isRequired,
     completedMeetings: PropTypes.number.isRequired,
     rate: PropTypes.number.isRequired,
     _id: PropTypes.string.isRequired,
-    bookmark: PropTypes.bool.isRequired,
+    bookmark: PropTypes.bool,
     onToggleBookmark: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired
 };
