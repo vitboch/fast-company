@@ -7,6 +7,7 @@ const Loader = () => {
                 <div className="spinner-border text-primary m-5" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
+                <span>Loading...</span>
             </div>
         </>
     );
