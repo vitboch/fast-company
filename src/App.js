@@ -14,6 +14,7 @@ const App = () => {
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/users/:userId?" component={Users} />
+                    <Route path="/fast-company" component={Main} />
                     <Route path="/" exact component={Main} />
                     <Route path="/404" component={Loader} />
                     <Redirect to="/404" />
