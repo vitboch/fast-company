@@ -7,9 +7,9 @@ import paginate from "../utils/paginate";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import Loader from "./loader";
-import UsersTable from "./usersTable";
+import UsersTable from "../components/usersTable";
 
-const Users = () => {
+const UsersList = () => {
     const pageSize = 8;
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -63,53 +63,52 @@ const Users = () => {
         const clearFilter = () => setSelectedProf(undefined);
 
         return (
-            <div className="d-flex">
-                {professions && (
-                    <div className="d-flex flex-column flex-shrink-0 p-3">
-                        <GroupList
-                            selectedItem={selectedProf}
-                            items={professions}
-                            onItemSelect={handleProfessionSelect}
-                        />
-                        <button
-                            className="btn btn-secondary mt-2"
-                            onClick={clearFilter}
-                        >
-                            Очистить
-                        </button>
-                    </div>
-                )}
-                <div className="d-flex flex-column">
-                    {professions ? (
-                        <SearchStatus totalUsers={count} />
-                    ) : (
-                        <Loader />
+            <>
+                {!professions && <Loader />}
+                <div className="d-flex justify-content-center">
+                    {professions && (
+                        <div className="d-flex flex-column flex-shrink-0 p-3">
+                            <GroupList
+                                selectedItem={selectedProf}
+                                items={professions}
+                                onItemSelect={handleProfessionSelect}
+                            />
+                            <button
+                                className="btn btn-secondary mt-2"
+                                onClick={clearFilter}
+                            >
+                                Очистить
+                            </button>
+                        </div>
                     )}
-                    {count > 0 && (
-                        <UsersTable
-                            users={userCrop}
-                            onSort={handleSort}
-                            selectedSort={sortBy}
-                            onDelete={handleDelete}
-                            onToggleBookmark={handleToggleBookmark}
-                        />
-                    )}
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            currentPage={currentPage}
-                            onPageChange={handlePageChange}
-                        />
+                    <div className="d-flex flex-column">
+                        {professions && <SearchStatus totalUsers={count} />}
+                        {count > 0 && (
+                            <UsersTable
+                                users={userCrop}
+                                onSort={handleSort}
+                                selectedSort={sortBy}
+                                onDelete={handleDelete}
+                                onToggleBookmark={handleToggleBookmark}
+                            />
+                        )}
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                currentPage={currentPage}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 };
 
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
