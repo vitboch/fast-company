@@ -8,6 +8,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import Loader from "./loader";
 import UsersTable from "../components/usersTable";
+import SearchBar from "./searchBar";
 
 const UsersList = () => {
     const pageSize = 8;
@@ -15,9 +16,10 @@ const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState(undefined);
     const [selectedProf, setSelectedProf] = useState();
+    const [selectedName, setSelectedName] = useState("");
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-
     const [users, setUsers] = useState([]);
+
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
@@ -42,17 +44,30 @@ const UsersList = () => {
     }, [selectedProf]);
 
     const handleProfessionSelect = (item) => {
+        setSelectedName("");
         setSelectedProf(item);
+    };
+    const handleNameSelect = ({ target }) => {
+        setSelectedProf();
+        setSelectedName(target.value);
     };
     const handlePageChange = (pageIndex) => setCurrentPage(pageIndex);
     const handleSort = (item) => {
         setSortBy(item);
     };
-
+    const filterUsers = (users) => {
+        if (selectedProf) {
+            return users.filter((user) =>
+                _.isEqual(user.profession, selectedProf)
+            );
+        } else if (selectedName) {
+            return users.filter((user) =>
+                user.name.toLowerCase().includes(selectedName.toLowerCase())
+            );
+        } else return users;
+    };
     if (users) {
-        const filteredUsers = selectedProf
-            ? users.filter((user) => _.isEqual(user.profession, selectedProf))
-            : users;
+        const filteredUsers = filterUsers(users);
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
             filteredUsers,
@@ -82,7 +97,15 @@ const UsersList = () => {
                         </div>
                     )}
                     <div className="d-flex flex-column">
-                        {professions && <SearchStatus totalUsers={count} />}
+                        {professions && (
+                            <>
+                                <SearchStatus totalUsers={count} />
+                                <SearchBar
+                                    searchNameValue={selectedName}
+                                    handleNameSelect={handleNameSelect}
+                                />
+                            </>
+                        )}
                         {count > 0 && (
                             <UsersTable
                                 users={userCrop}
