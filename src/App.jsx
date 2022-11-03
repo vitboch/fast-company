@@ -13,13 +13,14 @@ const App = () => {
             <React.StrictMode>
                 <NavBar />
                 <Switch>
-                    <Route path="/" exact component={Main} />
                     <Route path="/login/:type?" component={Login} />
+                    <Route path="/users/:userId?" exact component={Users} />
                     <Route
                         path="/users/:userId?/edit"
                         component={UserEditPage}
                     />
-                    <Route path="/users/:userId?" component={Users} />
+                    <Route path="/fast-company" component={Main} />
+                    <Route path="/" exact component={Main} />
                     <Route path="/404" component={Loader} />
                     <Redirect to="/404" />
                 </Switch>
