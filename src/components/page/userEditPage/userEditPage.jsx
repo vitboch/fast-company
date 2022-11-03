@@ -18,12 +18,11 @@ const UserEditPage = () => {
         sex: "",
         qualities: []
     });
-    console.log(data);
     const [qualities, setQualities] = useState([]);
     const [professions, setProfession] = useState([]);
     const [errors, setErrors] = useState({});
 
-    function objectToArray(object) {
+    const objectToArray = (object) => {
         let arr = [];
         if (!Array.isArray(object)) {
             arr = Object.keys(object).map((key) => object[key]);
@@ -31,7 +30,13 @@ const UserEditPage = () => {
             arr = object;
         }
         return arr;
-    }
+    };
+
+    const getLabelValue = (qualities) =>
+        qualities.map((quality) => ({
+            label: quality.name,
+            value: quality._id
+        }));
 
     useEffect(() => {
         api.users.getById(userId).then((data) => setData(data));
@@ -52,7 +57,6 @@ const UserEditPage = () => {
         }));
     };
 
-    console.log(data.qualities);
     const validate = () => {
         const errors = validator(data, validatorConfig);
         setErrors(errors);
@@ -75,19 +79,24 @@ const UserEditPage = () => {
     };
 
     const isValid = Object.keys(errors).length === 0;
-    console.log("data", data);
-    console.log("userId", userId);
+    // console.log("data =>", data);
+    // console.log("userId =>", userId);
+    // console.log("data.profession =>", data.profession);
+    // console.log("data.qualities =>", data.qualities);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log(data);
+
+        // console.log("data =>", data);
+        console.log("data.profession =>", data.profession);
+
         api.users.update(userId, data);
         history.replace(`/users/${userId}`);
     };
 
-    if (data.sex !== "") {
+    if (data._id) {
         return (
             <div className="container mt-5">
                 <div className="row">
@@ -129,7 +138,7 @@ const UserEditPage = () => {
                             <MultiSelectField
                                 options={qualities}
                                 onChange={handleChange}
-                                defaultValue={data.qualities}
+                                defaultValue={getLabelValue(data.qualities)}
                                 name="qualities"
                                 label="Выберите ваши качества"
                             />
