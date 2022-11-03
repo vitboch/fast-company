@@ -7,14 +7,10 @@ import { Link } from "react-router-dom";
 
 const UserPage = ({ userId }) => {
     const [user, setUser] = useState();
-    // const history = useHistory();
 
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
     }, []);
-    // const handleUsers = () => {
-    //     history.push("/users");
-    // };
 
     if (user !== undefined) {
         return (
