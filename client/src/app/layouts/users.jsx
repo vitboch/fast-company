@@ -9,7 +9,7 @@ const Users = () => {
     const params = useParams();
     const { userId, edit } = params;
     return (
-        <>
+        <div className="d-flex justify-content-center">
             <UserProvider>
                 {userId ? (
                     edit ? (
@@ -21,7 +21,7 @@ const Users = () => {
                     <UsersListPage />
                 )}
             </UserProvider>
-        </>
+        </div>
     );
 };
 
