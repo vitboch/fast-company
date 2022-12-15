@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import API from "../../../api";
 import { displayDate } from "../../../utils/displayDate";
-import Loader from "./loader";
+import Loader from "../loader";
 
 const Comment = ({
     content,
@@ -25,7 +25,7 @@ const Comment = ({
         <div className="bg-light card-body  mb-3">
             <div className="row">
                 {isLoading ? (
-                    <Loader/>
+                    <Loader />
                 ) : (
                     <div className="col">
                         <div className="d-flex flex-start ">

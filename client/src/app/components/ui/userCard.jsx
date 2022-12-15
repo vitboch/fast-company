@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+
 const UserCard = ({ user }) => {
     const history = useHistory();
     const handleClick = () => {
@@ -17,11 +18,7 @@ const UserCard = ({ user }) => {
                 </button>
                 <div className="d-flex flex-column align-items-center text-center position-relative">
                     <img
-                        src={`https://avatars.dicebear.com/api/avataaars/${(
-                            Math.random() + 1
-                        )
-                            .toString(36)
-                            .substring(7)}.svg`}
+                        src={user.image}
                         className="rounded-circle"
                         width="150"
                     />
