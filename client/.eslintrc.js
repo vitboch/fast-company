@@ -5,6 +5,9 @@ module.exports = {
     },
     extends: ["plugin:react/recommended", "standard"],
     parserOptions: {
+        ecmaFeatures: {
+            jsx: true
+        },
         ecmaVersion: 12,
         sourceType: "module"
     },
@@ -17,6 +20,13 @@ module.exports = {
             { anonymous: "always", named: "never" }
         ],
         "multiline-ternary": ["off"],
-        quotes: ["error", "double", { allowTemplateLiterals: true }]
+        quotes: [
+            "error",
+            "double",
+            {
+                allowTemplateLiterals: true,
+                avoidEscape: true
+            }
+        ]
     }
 };

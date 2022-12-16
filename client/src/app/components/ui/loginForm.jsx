@@ -59,7 +59,6 @@ const LoginForm = () => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log(data);
 
         try {
             await signIn(data);
