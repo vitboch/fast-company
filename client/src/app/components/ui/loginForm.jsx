@@ -11,8 +11,8 @@ const LoginForm = () => {
         password: "",
         stayOn: false
     });
-    const { signIn } = useAuth();
     const history = useHistory();
+    const { signIn } = useAuth();
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -59,11 +59,15 @@ const LoginForm = () => {
         event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        console.log(data);
 
         try {
             await signIn(data);
-            history.push("/");
+
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (error) {
             setErrors(error);
         }
