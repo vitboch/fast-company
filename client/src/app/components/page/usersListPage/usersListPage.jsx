@@ -21,9 +21,6 @@ const UsersListPage = () => {
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
-    const handleDelete = (userId) => {
-        console.log(userId);
-    };
     const handleToggleBookMark = (id) => {
         const newArray = users.map((user) => {
             if (user._id === id) {
@@ -31,7 +28,8 @@ const UsersListPage = () => {
             }
             return user;
         });
-        console.log(newArray);
+        // console.log(newArray);
+        return newArray;
     };
 
     useEffect(() => {
@@ -117,7 +115,6 @@ const UsersListPage = () => {
                             users={usersCrop}
                             onSort={handleSort}
                             selectedSort={sortBy}
-                            onDelete={handleDelete}
                             onToggleBookMark={handleToggleBookMark}
                         />
                     )}

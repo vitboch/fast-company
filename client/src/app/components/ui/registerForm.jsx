@@ -103,7 +103,6 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((quality) => quality.value)
         };
-        console.log(newData);
 
         try {
             await signUp(newData);
