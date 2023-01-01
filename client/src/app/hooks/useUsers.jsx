@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import userService from "../services/user.service";
 import { toast } from "react-toastify";
-import { useAuth } from "../../app/hooks/useAuth";
+import { useAuth } from "./useAuth";
 import Loader from "../components/common/loader";
 
 const UserContext = React.createContext();
