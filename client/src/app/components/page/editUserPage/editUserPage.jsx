@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/textField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../hooks/useAuth";
 import {
     getQualities,
     getQualitiesLoadingStatus
@@ -16,15 +14,14 @@ import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
-import { getCurrentUserData } from "../../../store/users";
+import { getCurrentUserData, updateUser } from "../../../store/users";
 import Loader from "../../common/loader";
 
 const EditUserPage = () => {
-    const history = useHistory();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
-    const { updateUserData } = useAuth();
     const qualities = useSelector(getQualities());
     const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
     const qualitiesList = qualities.map((quality) => ({
@@ -51,15 +48,16 @@ const EditUserPage = () => {
         }
         return qualitiesArray;
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        await updateUserData({
-            ...data,
-            qualities: data.qualities.map((quality) => quality.value)
-        });
-        history.push(`/users/${currentUser._id}`);
+        dispatch(
+            updateUser({
+                ...data,
+                qualities: data.qualities.map((quality) => quality.value)
+            })
+        );
     };
     const transformData = (data) => {
         return getQualitiesListByIds(data).map((quality) => ({
