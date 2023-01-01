@@ -61,7 +61,9 @@ const usersSlice = createSlice({
         },
         userUpdateSuccessed: (state, action) => {
             state.entities[
-                state.entities.findIndex((u) => u._id === action.payload._id)
+                state.entities.findIndex(
+                    (user) => user._id === action.payload._id
+                )
             ] = action.payload;
         },
         authRequested: (state) => {

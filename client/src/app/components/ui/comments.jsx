@@ -1,14 +1,17 @@
-import { orderBy } from "lodash";
 import React, { useEffect } from "react";
-import CommentsList, { AddCommentForm } from "../common/comments";
-import { useComments } from "../../hooks/useComments";
 import { useDispatch, useSelector } from "react-redux";
+import { orderBy } from "lodash";
+import { nanoid } from "nanoid";
+import CommentsList, { AddCommentForm } from "../common/comments";
 import {
     getComments,
     getCommentsLoadingStatus,
-    loadCommentsList
+    loadCommentsList,
+    createComment,
+    removeComment
 } from "../../store/comments";
 import { useParams } from "react-router-dom";
+import { getCurrentUserId } from "../../store/users";
 import Loader from "../common/loader";
 
 const Comments = () => {
@@ -18,14 +21,21 @@ const Comments = () => {
         dispatch(loadCommentsList(userId));
     }, [userId]);
     const isLoading = useSelector(getCommentsLoadingStatus());
-    const { createComment, removeComment } = useComments();
     const comments = useSelector(getComments());
+    const currentUserId = useSelector(getCurrentUserId());
 
     const handleSubmit = (data) => {
-        createComment(data);
+        const comment = {
+            ...data,
+            pageId: userId,
+            created_at: Date.now(),
+            userId: currentUserId,
+            _id: nanoid()
+        };
+        dispatch(createComment(comment));
     };
-    const handleRemoveComment = (id) => {
-        removeComment(id);
+    const handleRemoveComment = (commentId) => {
+        dispatch(removeComment(commentId));
     };
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
 
@@ -39,7 +49,7 @@ const Comments = () => {
             {sortedComments.length > 0 && (
                 <div className="card mb-3">
                     <div className="card-body ">
-                        <h2>Comments</h2>
+                        <h2>Комментарии</h2>
                         <hr />
                         {!isLoading ? (
                             <CommentsList

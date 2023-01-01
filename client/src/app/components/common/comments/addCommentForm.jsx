@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import TextAreaField from "../form/textAreaField";
 import { validator } from "../../../utils/validator";
-import PropTypes from "prop-types";
 
 const AddCommentForm = ({ onSubmit }) => {
     const [data, setData] = useState({});
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        validate();
+    }, [data]);
+
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
     };
+
     const validatorConfig = {
         content: {
             isRequired: {
@@ -29,8 +35,8 @@ const AddCommentForm = ({ onSubmit }) => {
         setData({});
         setErrors({});
     };
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         const isValid = validate();
         if (!isValid) return;
         onSubmit(data);
